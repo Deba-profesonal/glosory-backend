@@ -7,19 +7,21 @@ from datetime import datetime
 import smtplib
 from email.mime.text import MIMEText
 import json
+import os
 
 
 app = Flask(__name__)
 CORS(app)
 
 
+
 def get_db_connection():
     return mysql.connector.connect(
-        host="roundhouse.proxy.rlwy.net",
-        user="root",
-        password="yVAbOKBAMhyTiAXrgkzAgjxxmxhutANE",
-        database="railway"
-        port=17544
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME"),
+        port=int(os.getenv("DB_PORT"))
     )
 
 @app.route('/')
@@ -589,5 +591,7 @@ def get_logs():
 
     return jsonify({"logs": logs})
 
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    port=int(os.environ.get("PORT",5001))
+    app.run(host='0.0.0.0', port=port)
