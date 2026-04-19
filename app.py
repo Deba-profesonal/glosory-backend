@@ -233,8 +233,8 @@ def login():
         return jsonify({"message": "Invalid credentials"}), 401
 
 def send_email_otp(to_email, otp):
-    sender_email = "debasishmohapatra183@gmail.com"
-    app_password = "ewbsqzhlkfysstgi"
+    sender_email = os.getenv("EMAIL_USER")
+    app_password = os.getenv("EMAIL_PASS")
 
     subject = "🔐 Your OTP for Glosory Account Verification"
     body =f""" 
@@ -366,8 +366,9 @@ def send_order_email(to_email, total):
     import smtplib
     from email.mime.text import MIMEText
 
-    sender_email = "debasishmohapatra183@gmail.com"
-    app_password = "ewbsqzhlkfysstgi"
+    sender_email = os.getenv("EMAIL_USER")
+    app_password = os.getenv("EMAIL_PASS")
+
 
     subject = "🛒 Order Confirmed - Glosory"
 
